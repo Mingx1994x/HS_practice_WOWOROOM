@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WOWOROOM</title>
+  </head>
+  <body>
+    <%- include('./layout/header'); -%>
+
+    <h1 class="index-title">我是WOWOROOM首頁</h1>
+
+    <div class="card" style="width: 18rem">
+      <img src="../assets/images/cat.jpg" class="card-img-top" alt="cat" />
+      <div class="card-body">
+        <h5 class="card-title">卡片元件</h5>
+        <p class="card-text">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, odit,
+          iusto odio assumenda alias id nobis earum!
+        </p>
+      </div>
+    </div>
+
+    <!-- Modal alert -->
+    <button type="button" class="btn btn-primary alertTestBtn">
+      打開 modal
+    </button>
+
+    <%- include('./layout/footer'); -%>
+
+    <script type="module" src="../main.js"></script>
+    <script type="module">
+      import axios from 'axios';
+      import Swal from 'sweetalert2';
+
+      const HexApi='https://livejs-api.hexschool.io/';
+      const apiPath='yameow999';
+      const customerApi=`${HexApi}api/livejs/v1/customer/${apiPath}`;
+
+      //get product data
+      const getProducts=async()=>{
+        try {
+          const res=await axios.get(`${customerApi}/products`);
+          console.log(res.data);
+
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+      getProducts();
+
+      //alert
+      const alertTest=document.querySelector(".alertTestBtn");
+      alertTest.addEventListener('click',()=>{
+        Swal.fire({
+          title: "The Internet?",
+          text: "That thing is still around?",
+          icon: "question"
+        });
+      })
+    </script>
+  </body>
+</html>
