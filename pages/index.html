@@ -391,18 +391,21 @@
         getCarts();
 
       }
-
+      const productSelect=document.querySelector('.productSelect');
       const productWrap=document.querySelector('.productWrap');
       const cartTable=document.querySelector('.shoppingCart-table');
       const cartBody=document.querySelector('.cartBody');
       const cartFoot=document.querySelector('.cartFoot');
       const emptyCart=document.querySelector('.emptyCart');
+      let productData=new Array;
+
       //get product data
       const getProducts=async()=>{
         try {
           const res=await axios.get(`${customerApi}/products`);
-          // console.log(res.data);
-          renderProduct(res.data.products);
+          console.log(res.data);
+          productData=res.data.products;
+          renderProduct(productData);
 
         } catch (error) {
           console.log(error.message);
@@ -412,7 +415,7 @@
       const getCarts=async()=>{
         try {
           const res=await axios.get(`${customerApi}/carts`);
-          console.log(res.data);
+          // console.log(res.data);
           renderCart(res.data);
         } catch (error) {
           console.log(error.message||'something went wrong');
@@ -422,7 +425,7 @@
       // render
       const renderProduct=(products)=>{
         products.forEach(product => {
-          productWrap.appendChild(createProductCard(product.images,product.title,product['origin_price'],product.price));
+          createProductCard(product.images,product.title,product['origin_price'],product.price);
         });
       }
 
@@ -473,7 +476,7 @@
         productCard.appendChild(originPrice);
         productCard.appendChild(nowPrice);
 
-        return productCard;
+        productWrap.appendChild(productCard);
       }
 
       const createCartTable=(cartId,url,price,title,quantity,sum)=>{
@@ -536,6 +539,22 @@
         cartTableRow.appendChild(cartTotal);
         cartFoot.appendChild(cartTableRow);
       }
+
+      // 監聽
+      productSelect.addEventListener('change',(e)=>{
+        productWrap.innerHTML='';
+        let productCategory=e.target.value;
+        if(productCategory==='全部'){
+          renderProduct(productData);
+        }else{
+          let filterProduct=productData.filter(product=>product.category===productCategory);
+          renderProduct(filterProduct);
+        }
+      })
+
+
+
+
       //alert
       const alertTest=document.querySelector(".alertTestBtn");
       alertTest.addEventListener('click',()=>{
