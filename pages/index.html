@@ -443,7 +443,6 @@
       const deleteAll=async()=>{
         try {
           const res=await axios.delete(`${customerApi}/carts`);
-          // console.log(res);
           cartData=res.data;
           renderCart(cartData);
         } catch (error) {
@@ -454,6 +453,18 @@
       const deleteProduct=async(id)=>{
         try {
           const res=await axios.delete(`${customerApi}/carts/${id}`);
+          cartData=res.data;
+          renderCart(cartData);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      //update
+      const updateCart=async(data)=>{
+        let updateData={data};
+        try {
+          const res=await axios.patch(`${customerApi}/carts`,updateData);
           console.log(res);
           cartData=res.data;
           renderCart(cartData);
@@ -509,6 +520,7 @@
             createCartTable(cartId,productUrl,productPrice,productTitle,productQty,productSum);
           });
         }else{
+          emptyCart();
           const discardAllBtn=document.querySelector('.discardAllBtn');
           discardAllBtn.classList.add('disabled');
         }
@@ -565,7 +577,23 @@
         cartTableRow.appendChild(cartPrice);
 
         let cartQty=document.createElement('td');
-        cartQty.textContent=`${quantity}`;
+        cartQty.dataset.id=`${cartId}`;
+        let minusBtn=document.createElement('button');
+        minusBtn.classList.add('btn','btn-sm','btn-outline-primary','minusBtn');
+        minusBtn.type='button';
+        minusBtn.dataset.quantity=`${quantity}`;
+        minusBtn.textContent='-';
+        let quantityNum=document.createElement('span');
+        quantityNum.classList.add('mx-3');
+        quantityNum.textContent=`${quantity}`;
+        let plusBtn=document.createElement('button');
+        plusBtn.classList.add('btn','btn-sm','btn-outline-primary','plusBtn');
+        plusBtn.type='button';
+        plusBtn.dataset.quantity=`${quantity}`;
+        plusBtn.textContent='+';
+        cartQty.appendChild(minusBtn);
+        cartQty.appendChild(quantityNum);
+        cartQty.appendChild(plusBtn);
         cartTableRow.appendChild(cartQty);
 
         let cartSum=document.createElement('td');
@@ -574,15 +602,24 @@
 
         let discardBtn=document.createElement('td');
         discardBtn.classList.add('discardBtn');
+        discardBtn.dataset.discard=`${cartId}`;
         let discardIcon=document.createElement('a');
-        discardIcon.classList.add('material-symbols-outlined');
+        discardIcon.classList.add('material-symbols-outlined','removeBtn');
         discardIcon.textContent='clear';
-        discardIcon.dataset.id=`${cartId}`;
         discardBtn.appendChild(discardIcon);
         cartTableRow.appendChild(discardBtn);
 
         cartBody.appendChild(cartTableRow);
+      }
 
+      const emptyCart=()=>{
+        let cartTableRow=document.createElement('tr');
+        let emptyState=document.createElement('td');
+        emptyState.colSpan='5';
+        emptyState.textContent='目前購物車是空的唷！\n趕緊選購吧！';
+        emptyState.style.textAlign='center';
+        cartTableRow.appendChild(emptyState);
+        cartBody.appendChild(cartTableRow);
       }
 
       const createCartFoot=(total)=>{
@@ -628,49 +665,30 @@
 
       cartBody.addEventListener('click',e=>{
         let clickTarget=e.target;
-        let deleteId=clickTarget.dataset.id;
-        if(deleteId){
-          Swal.fire({
-            title: "確定移除此商品?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-            }).then((result) => {
-              if (result.isConfirmed) {
-                deleteProduct(deleteId);
-                Swal.fire({
-                title: "Deleted!",
-                text: "商品已移除",
-                icon: "success"
-                });
-              }
-            });
+        if(clickTarget.getAttribute('class').includes('removeBtn')){
+          let deleteId=clickTarget.parentNode.dataset.discard;
+          confirmDialog(()=>deleteProduct(deleteId));
+        }else if(clickTarget.getAttribute('class').includes('plusBtn')){
+          let updateData=new Object;
+          updateData.id=clickTarget.parentNode.dataset.id;
+          updateData.quantity=Number(clickTarget.dataset.quantity)+1;
+          updateCart(updateData);
+        }else if(clickTarget.getAttribute('class').includes('minusBtn')){
+          let updateData=new Object;
+          updateData.id=clickTarget.parentNode.dataset.id;
+          updateData.quantity=Number(clickTarget.dataset.quantity)-1;
+          if(updateData.quantity===0){
+            confirmDialog(()=>deleteProduct(updateData.id));
+          }else{
+            updateCart(updateData);
+          }
         }
       })
 
       cartFoot.addEventListener('click',e=>{
         let clickTarget=e.target;
         if(clickTarget.getAttribute('class')==='discardAllBtn'){
-          Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-            }).then((result) => {
-              if (result.isConfirmed) {
-                deleteAll();
-                Swal.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
-                icon: "success"
-                });
-              }
-            });
+          confirmDialog(deleteAll);
         }
       })
 
@@ -693,6 +711,36 @@
         });
       }
 
+      const confirmDialog=(fn)=>{
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                fn();
+                Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+                });
+              }
+            });
+      }
+
+      const successDialog=()=>{
+        Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "訂單已送出！",
+        showConfirmButton: false,
+        timer: 1500
+        });
+      }
       //表單
       const orderForm=document.querySelector('.orderInfo-form');
       let constraints={
@@ -733,7 +781,9 @@
       orderForm.addEventListener('submit',e=>{
         e.preventDefault();
         let validateResult=validate(orderForm,constraints);
-        if(validateResult){
+        if(cartData.carts.length===0){
+          Swal.fire("購物車是空的唷！趕緊來選購吧！");
+        }else if(validateResult){
           validForm(validateResult);
         }else{
           let userInfo=new Object;
@@ -744,6 +794,8 @@
           userInfo.payment=document.querySelector('#tradeWay').value;
           // console.log(userInfo);
           orderProducts(userInfo);
+          successDialog();
+          deleteAll();
           orderForm.reset();
         }
       })
