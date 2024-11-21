@@ -301,7 +301,6 @@
           <tbody class="cartBody"></tbody>
           <tfoot class="cartFoot"></tfoot>
         </table>
-        <p class="emptyCart">購物車是空的唷！</p>
       </div>
     </section>
     <section class="orderInfo wrap" id="orderInfo">
@@ -373,10 +372,7 @@
       </form>
     </section>
     <a href="./test(front).html">test頁面</a>
-    <!-- Modal alert -->
-    <button type="button" class="btn btn-primary alertTestBtn">
-      打開 modal
-    </button>
+
     <script type="module" src="../main.js"></script>
     <script type="module">
       import axios from 'axios';
@@ -396,8 +392,11 @@
       const cartTable=document.querySelector('.shoppingCart-table');
       const cartBody=document.querySelector('.cartBody');
       const cartFoot=document.querySelector('.cartFoot');
-      const emptyCart=document.querySelector('.emptyCart');
+
+
       let productData=new Array;
+      let cartData=new Object;
+
 
       //get product data
       const getProducts=async()=>{
@@ -412,27 +411,81 @@
         }
       }
 
+      //get cart data
       const getCarts=async()=>{
         try {
           const res=await axios.get(`${customerApi}/carts`);
-          // console.log(res.data);
-          renderCart(res.data);
+          console.log(res.data);
+          cartData=res.data;
+          renderCart(cartData);
         } catch (error) {
           console.log(error.message||'something went wrong');
         }
       }
 
+      //add product data
+      const addCart=async(id)=>{
+        let productInfo={
+            data:{
+              productId:id,
+              quantity:1
+            }
+          }
+        try {
+          const res=await axios.post(`${customerApi}/carts`,productInfo);
+          console.log(res);
+          cartData=res.data;
+          renderCart(cartData);
+          toastAlert();
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      //delete cart
+      const deleteAll=async()=>{
+        try {
+          const res=await axios.delete(`${customerApi}/carts`);
+          // console.log(res);
+          cartData=res.data;
+          renderCart(cartData);
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+
+      const deleteProduct=async(id)=>{
+        try {
+          const res=await axios.delete(`${customerApi}/carts/${id}`);
+          console.log(res);
+          cartData=res.data;
+          renderCart(cartData);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
       // render
       const renderProduct=(products)=>{
+        productWrap.innerHTML='';
         products.forEach(product => {
-          createProductCard(product.images,product.title,product['origin_price'],product.price);
+          let productUrl=product.images;
+          let productTitle=product.title;
+          let originPrice=product['origin_price'];
+          let price=product.price;
+          let productId=product.id;
+          createProductCard(productUrl,productTitle,originPrice,price,productId);
         });
       }
 
       const renderCart=(data)=>{
-        if(data){
+        cartBody.innerHTML='';
+        cartFoot.innerHTML='';
+        let cartsNum=data.carts.length;
+        let cartTotal=data.finalTotal;
+        createCartFoot(cartTotal);
+        if(cartsNum!==0){
           let cartProducts=data.carts;
-          let cartTotal=data.finalTotal;
           cartProducts.forEach(cart=>{
             let cartId=cart.id;
             let productUrl=cart.product.images;
@@ -442,14 +495,13 @@
             let productSum=productPrice*productQty;
             createCartTable(cartId,productUrl,productPrice,productTitle,productQty,productSum);
           });
-          createCartFoot(cartTotal);
         }else{
-          cartTable.display='none';
-          emptyCart.display='block';
+          const discardAllBtn=document.querySelector('.discardAllBtn');
+          discardAllBtn.classList.add('disabled');
         }
       }
 
-      const createProductCard=(url,title,origin,price)=>{
+      const createProductCard=(url,title,origin,price,id)=>{
         let productCard=document.createElement('li');
         productCard.classList.add('productCard');;
         let productType=document.createElement('h4');
@@ -459,6 +511,7 @@
         productImg.src=`${url}`;
         let addCardBtn=document.createElement('a');
         addCardBtn.classList.add('addCardBtn');
+        addCardBtn.dataset.id=`${id}`;
         addCardBtn.textContent='加入購物車';
         let productTitle=document.createElement('h3');
         productTitle.textContent=`${title}`;
@@ -511,6 +564,7 @@
         let discardIcon=document.createElement('a');
         discardIcon.classList.add('material-symbols-outlined');
         discardIcon.textContent='clear';
+        discardIcon.dataset.id=`${cartId}`;
         discardBtn.appendChild(discardIcon);
         cartTableRow.appendChild(discardBtn);
 
@@ -541,8 +595,7 @@
       }
 
       // 監聽
-      productSelect.addEventListener('change',(e)=>{
-        productWrap.innerHTML='';
+      productSelect.addEventListener('change',e=>{
         let productCategory=e.target.value;
         if(productCategory==='全部'){
           renderProduct(productData);
@@ -552,19 +605,80 @@
         }
       })
 
+      productWrap.addEventListener('click',e=>{
+        if(e.target.dataset.id){
+          let productId=e.target.dataset.id;
+          // console.log(productId);
+          addCart(productId);
+        }
+      })
 
+      cartBody.addEventListener('click',e=>{
+        let clickTarget=e.target;
+        let deleteId=clickTarget.dataset.id;
+        if(deleteId){
+          Swal.fire({
+            title: "確定移除此商品?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                deleteProduct(deleteId);
+                Swal.fire({
+                title: "Deleted!",
+                text: "商品已移除",
+                icon: "success"
+                });
+              }
+            });
+        }
+      })
 
+      cartFoot.addEventListener('click',e=>{
+        let clickTarget=e.target;
+        if(clickTarget.getAttribute('class')==='discardAllBtn'){
+          Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                deleteAll();
+                Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+                });
+              }
+            });
+        }
+      })
 
       //alert
-      const alertTest=document.querySelector(".alertTestBtn");
-      alertTest.addEventListener('click',()=>{
-        Swal.fire({
-          title: "The Internet?",
-          text: "That thing is still around?",
-          icon: "question"
+      const toastAlert=()=>{
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
         });
-      });
-
+        Toast.fire({
+          icon: "success",
+          title: "成功加入購物車"
+        });
+      }
       init();
     </script>
   </body>
