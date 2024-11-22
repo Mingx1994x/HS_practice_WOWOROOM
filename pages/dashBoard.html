@@ -11,16 +11,51 @@
     <title>dashBoard</title>
   </head>
   <body>
-    <%- include('./layout/header'); -%>
-    <h1>我是後台頁面</h1>
-    <div id="chart"></div>
+    <%- include('./layout/header', {page: "dashBoard"}); -%>
+    <section class="wrap">
+      <h2 class="section-title">全品項營收比重</h2>
+      <div id="chart"></div>
+    </section>
+    <section class="wrap orderPage-list">
+      <a href="#" class="discardAllBtn">清除全部訂單</a>
+      <div class="orderTableWrap">
+        <table class="orderPage-table">
+          <thead>
+            <tr>
+              <th>訂單編號</th>
+              <th>聯絡人</th>
+              <th>聯絡地址</th>
+              <th>電子郵件</th>
+              <th>訂單品項</th>
+              <th>訂單日期</th>
+              <th>訂單狀態</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
 
     <%- include('./layout/footer'); -%>
 
     <script type="module" src="../main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.16.0/d3.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.18/c3.js"></script>
-    <script>
+    <script type="module">
+      import axios from 'axios';
+
+      const HexApi='https://livejs-api.hexschool.io/';
+      const apiPath='yameow999';
+      const adminApi=`${HexApi}api/livejs/v1/admin/${apiPath}`;
+      const adminToken='vruPjVITW7PaX7ruCuJr2t744jk2';
+      const adminAuthz={
+              headers:{
+                authorization:adminToken
+              }
+            }
+
+      //c3 chart
       const renderChart=()=>{
       const chart = c3.generate({
         bindto: '#chart',
@@ -35,7 +70,135 @@
       }
       function init(){
         renderChart();
+        getOrder();
       }
+
+      //get order
+      let ordersData=new Array;
+      const getOrder=async()=>{
+        try {
+          const res=await axios.get(`${adminApi}/orders`,adminAuthz);
+          console.log(res.data);
+          ordersData=res.data.orders;
+          renderTable(ordersData);
+
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      //delete cart
+      const deleteAll=async()=>{
+        try {
+          const res=await axios.delete(`${adminApi}/orders`,adminAuthz);
+          ordersData=res.data.orders;
+          renderTable(ordersData);
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+
+      const deleteOrder=async(id)=>{
+        try {
+          const res=await axios.delete(`${adminApi}/orders/${id}`,adminAuthz);
+          ordersData=res.data.orders;
+          renderTable(ordersData);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      //渲染
+      const orderTable=document.querySelector('.orderPage-table');
+      const orderTableBody=orderTable.querySelector('tbody');
+      const renderTable=(orders)=>{
+        orderTableBody.innerHTML='';
+        orders.forEach(order => {
+          let serial=order.id;
+          let user=order.user;
+          let products=order.products;
+          let date=order.updatedAt;
+          let status=order.paid;
+
+          createOrdersTable(serial,user,products,date,status);
+        });
+      }
+
+
+      const createOrdersTable=(serial,user,products,date)=>{
+        let orderTableRow=document.createElement('tr');
+        let orderSerial=document.createElement('td');
+        orderSerial.textContent=`${serial}`;
+
+        let orderPerson=document.createElement('td');
+        let orderPersonName=document.createElement('p');
+        orderPersonName.textContent=`${user.name}`;
+        let orderPersonTel=document.createElement('p');
+        orderPersonTel.textContent=`${user.tel}`;
+        orderPerson.appendChild(orderPersonName);
+        orderPerson.appendChild(orderPersonTel);
+
+        let orderAddress=document.createElement('td');
+        orderAddress.textContent=`${user.address}`;
+
+        let orderEmail=document.createElement('td');
+        orderEmail.textContent=`${user.email}`;
+
+        let orderContent=document.createElement('td');
+        products.forEach(product=>{
+          let orderContentName=document.createElement('p');
+          orderContentName.textContent=`${product.title}`;
+          orderContent.appendChild(orderContentName);
+        })
+
+        let orderDate=document.createElement('td');
+        orderDate.textContent=`${date}`;
+
+        let orderStatus=document.createElement('td');
+        orderStatus.classList.add('orderStatus');
+        let orderStatusLink=document.createElement('a');
+        orderStatusLink.href=`#`;
+        if(!status){
+          orderStatusLink.textContent=`未處理`;
+        }else{
+          orderStatusLink.textContent=`已處理`;
+        }
+        orderStatus.appendChild(orderStatusLink);
+
+        let orderDelete=document.createElement('td');
+        let delSingleOrderBtn=document.createElement('input');
+        delSingleOrderBtn.type='button';
+        delSingleOrderBtn.classList.add('delSingleOrder-Btn');
+        delSingleOrderBtn.value='刪除';
+        delSingleOrderBtn.dataset.id=`${serial}`;
+        orderDelete.appendChild(delSingleOrderBtn);
+
+        orderTableRow.appendChild(orderSerial);
+        orderTableRow.appendChild(orderPerson);
+        orderTableRow.appendChild(orderAddress);
+        orderTableRow.appendChild(orderEmail);
+        orderTableRow.appendChild(orderContent);
+        orderTableRow.appendChild(orderDate);
+        orderTableRow.appendChild(orderStatus);
+        orderTableRow.appendChild(orderDelete);
+        orderTableBody.appendChild(orderTableRow);
+      }
+
+
+      //監聽
+      const discardAllBtn=document.querySelector('.discardAllBtn');
+      discardAllBtn.addEventListener('click',e=>{
+        e.preventDefault();
+        deleteAll();
+      })
+
+      orderTableBody.addEventListener('click',e=>{
+        if(e.target.type='button'){
+          let delBtn=e.target;
+          deleteOrder(delBtn.dataset.id);
+        }
+
+      })
 
       init();
     </script>
