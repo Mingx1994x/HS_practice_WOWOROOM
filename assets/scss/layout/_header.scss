@@ -44,7 +44,7 @@
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   background-color: #FFFFFF;
-  box-shadow: -1px 12px 8px 0px rgba(186, 186, 186, 0.2);
+
 
   &.openMenu {
     max-height: 300px;
@@ -81,6 +81,7 @@
     overflow: hidden;
     -webkit-transition: all .2s;
     transition: all .2s;
+    box-shadow: -1px 12px 8px 0px rgba(186, 186, 186, 0.2);
 
     li {
       width: 100%;
