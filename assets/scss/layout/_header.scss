@@ -1,4 +1,135 @@
-.header{
-  background: #69F0AE;
-  font-size: 64px;
+.topBar {
+  border-bottom: 40px solid #000000;
+  margin-bottom: 30px;
+
+  .wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+
+    @media (max-width: 1110px) {
+      padding: 0 15px;
+
+    }
+  }
+
+  a {
+    display: block;
+    text-decoration: none;
+    color: #000000;
+    font-size: 1.25rem;
+
+    &:hover {
+      color: #6A33F8;
+      -webkit-transform: scale(1.05);
+      transform: scale(1.05);
+    }
+  }
+}
+
+
+.topBar-menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  background-color: #FFFFFF;
+  box-shadow: -1px 12px 8px 0px rgba(186, 186, 186, 0.2);
+
+  &.openMenu {
+    max-height: 300px;
+  }
+
+  a {
+    padding: 36px 24px;
+    background-color: #FFFFFF;
+
+    &:hover {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+  }
+
+  li {
+    &:last-child a {
+      padding-right: 0;
+    }
+
+    .material-symbols-outlined {
+      font-size: 30px;
+    }
+  }
+
+  @media (max-width:767px) {
+    position: absolute;
+    top: 61px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 10;
+    max-height: 0;
+    overflow: hidden;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+
+    li {
+      width: 100%;
+
+      &:last-child a {
+        padding-right: 15px;
+      }
+
+
+      .material-symbols-outlined {
+        font-size: 24px;
+      }
+    }
+
+    a {
+      text-align: center;
+      padding: 15px;
+      font-size: 1rem;
+
+      &:hover {
+        background-color: #6A33F8;
+        color: #FFFFFF;
+      }
+    }
+  }
+}
+
+
+.menuToggle {
+  display: none;
+  cursor: pointer;
+
+  &:hover {
+    color: #6A33FF;
+  }
+
+  @media (max-width:767px) {
+    display: block;
+    font-size: 2rem;
+    padding: 15px;
+  }
+}
+
+
+.logo {
+  padding: 36px 0;
+  font-size: 1.5rem;
+
+  @media (max-width:767px) {
+    padding: 15px;
+  }
 }
