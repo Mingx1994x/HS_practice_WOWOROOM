@@ -555,60 +555,60 @@
         productWrap.appendChild(productCard);
       }
 
-      const createCartTable=(cartId,url,price,title,quantity,sum)=>{
-        let cartTableRow=document.createElement('tr');
-        let cartItem=document.createElement('td');
-        let cartContainer=document.createElement('div');
-        cartContainer.classList.add('cardItem-title');
-        let cartImg=document.createElement('img');
-        cartImg.src=`${url}`;
-        let cartTitle=document.createElement('p');
-        cartTitle.textContent=`${title}`;
+      const createCartTable=(cartId,url,price,title,quantity,sum)=> {
+          let cartTableRow=document.createElement('tr');
+          let cartItem=document.createElement('td');
+          let cartContainer=document.createElement('div');
+          cartContainer.classList.add('cardItem-title');
+          let cartImg=document.createElement('img');
+          cartImg.src=`${url}`;
+          let cartTitle=document.createElement('p');
+          cartTitle.textContent=`${title}`;
 
-        cartContainer.appendChild(cartImg);
-        cartContainer.appendChild(cartTitle);
-        cartItem.appendChild(cartContainer);
-        cartTableRow.appendChild(cartItem);
+          cartContainer.appendChild(cartImg);
+          cartContainer.appendChild(cartTitle);
+          cartItem.appendChild(cartContainer);
+          cartTableRow.appendChild(cartItem);
 
-        let cartPrice=document.createElement('td');
-        cartPrice.textContent=`NT$${price}`;
-        cartTableRow.appendChild(cartPrice);
+          let cartPrice=document.createElement('td');
+          cartPrice.textContent=`NT$${price}`;
+          cartTableRow.appendChild(cartPrice);
 
-        let cartQty=document.createElement('td');
-        cartQty.dataset.id=`${cartId}`;
-        let minusBtn=document.createElement('button');
-        minusBtn.classList.add('btn','btn-sm','btn-outline-primary','minusBtn');
-        minusBtn.type='button';
-        minusBtn.dataset.quantity=`${quantity}`;
-        minusBtn.textContent='-';
-        let quantityNum=document.createElement('span');
-        quantityNum.classList.add('mx-3');
-        quantityNum.textContent=`${quantity}`;
-        let plusBtn=document.createElement('button');
-        plusBtn.classList.add('btn','btn-sm','btn-outline-primary','plusBtn');
-        plusBtn.type='button';
-        plusBtn.dataset.quantity=`${quantity}`;
-        plusBtn.textContent='+';
-        cartQty.appendChild(minusBtn);
-        cartQty.appendChild(quantityNum);
-        cartQty.appendChild(plusBtn);
-        cartTableRow.appendChild(cartQty);
+          let cartQty=document.createElement('td');
+          cartQty.dataset.id=`${cartId}`;
+          let minusBtn=document.createElement('button');
+          minusBtn.classList.add('btn','btn-sm','btn-outline-primary','minusBtn');
+          minusBtn.type='button';
+          minusBtn.dataset.quantity=`${quantity}`;
+          minusBtn.textContent='-';
+          let quantityNum=document.createElement('span');
+          quantityNum.classList.add('mx-3');
+          quantityNum.textContent=`${quantity}`;
+          let plusBtn=document.createElement('button');
+          plusBtn.classList.add('btn','btn-sm','btn-outline-primary','plusBtn');
+          plusBtn.type='button';
+          plusBtn.dataset.quantity=`${quantity}`;
+          plusBtn.textContent='+';
+          cartQty.appendChild(minusBtn);
+          cartQty.appendChild(quantityNum);
+          cartQty.appendChild(plusBtn);
+          cartTableRow.appendChild(cartQty);
 
-        let cartSum=document.createElement('td');
-        cartSum.textContent=`NT$${sum}`;
-        cartTableRow.appendChild(cartSum);
+          let cartSum=document.createElement('td');
+          cartSum.textContent=`NT$${sum}`;
+          cartTableRow.appendChild(cartSum);
 
-        let discardBtn=document.createElement('td');
-        discardBtn.classList.add('discardBtn');
-        discardBtn.dataset.discard=`${cartId}`;
-        let discardIcon=document.createElement('a');
-        discardIcon.classList.add('material-symbols-outlined','removeBtn');
-        discardIcon.textContent='clear';
-        discardBtn.appendChild(discardIcon);
-        cartTableRow.appendChild(discardBtn);
+          let discardBtn=document.createElement('td');
+          discardBtn.classList.add('discardBtn');
+          discardBtn.dataset.discard=`${cartId}`;
+          let discardIcon=document.createElement('a');
+          discardIcon.classList.add('material-symbols-outlined','removeBtn');
+          discardIcon.textContent='clear';
+          discardBtn.appendChild(discardIcon);
+          cartTableRow.appendChild(discardBtn);
 
-        cartBody.appendChild(cartTableRow);
-      }
+          cartBody.appendChild(cartTableRow);
+        }
 
       const emptyCart=()=>{
         let cartTableRow=document.createElement('tr');
