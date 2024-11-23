@@ -55,22 +55,9 @@
               }
             }
 
-      //c3 chart
-      const renderChart=()=>{
-      const chart = c3.generate({
-        bindto: '#chart',
-        data: {
-          type:'pie',
-          columns: [
-            ['data1', 30, 200, 100, 400, 150, 250],
-            ['data2', 50, 20, 10, 40, 15, 25]
-            ]
-          }
-        });
-      }
       function init(){
-        renderChart();
         getOrder();
+        renderChart();
       }
 
       //get order
@@ -81,13 +68,14 @@
           console.log(res.data);
           ordersData=res.data.orders;
           renderTable(ordersData);
+          // renderChart(ordersData);
 
         } catch (error) {
           console.log(error);
         }
       }
 
-      //delete cart
+      //delete order
       const deleteAll=async()=>{
         try {
           const res=await axios.delete(`${adminApi}/orders`,adminAuthz);
@@ -108,27 +96,48 @@
         }
       }
 
+      //update order
+      const updateOrder=async(id)=>{
+        let targetOrder=ordersData.filter(order=>order.id===id);
+        let status=targetOrder[0].paid;
+        let updateData={
+          data:{
+            id,
+            paid:!status
+          }
+        }
+        try {
+          const res=await axios.put(`${adminApi}/orders`,updateData,adminAuthz);
+          ordersData=res.data.orders;
+          getOrder();
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      //format data
+      const formatTime=(timestamp)=>new Date(timestamp*1000).toLocaleDateString();
+
+
+
+
       //渲染
+      //table
       const orderTable=document.querySelector('.orderPage-table');
       const orderTableBody=orderTable.querySelector('tbody');
       const renderTable=(orders)=>{
         orderTableBody.innerHTML='';
         orders.forEach(order => {
-          let serial=order.id;
-          let user=order.user;
-          let products=order.products;
-          let date=order.updatedAt;
-          let status=order.paid;
-
-          createOrdersTable(serial,user,products,date,status);
+          let {id,user,products,createdAt,paid}=order;
+          createOrdersTable(id,user,products,createdAt,paid);
         });
       }
 
-
-      const createOrdersTable=(serial,user,products,date)=>{
+      const createOrdersTable=(id,user,products,time,status)=>{
         let orderTableRow=document.createElement('tr');
-        let orderSerial=document.createElement('td');
-        orderSerial.textContent=`${serial}`;
+        orderTableRow.dataset.id=`${id}`;
+        let orderId=document.createElement('td');
+        orderId.textContent=`${id}`;
 
         let orderPerson=document.createElement('td');
         let orderPersonName=document.createElement('p');
@@ -145,23 +154,27 @@
         orderEmail.textContent=`${user.email}`;
 
         let orderContent=document.createElement('td');
-        products.forEach(product=>{
+        products.forEach((product,index)=>{
           let orderContentName=document.createElement('p');
-          orderContentName.textContent=`${product.title}`;
+          orderContentName.textContent=`${index+1}. ${product.title}x${product.quantity}`;
           orderContent.appendChild(orderContentName);
         })
 
         let orderDate=document.createElement('td');
+        let date=formatTime(time);
         orderDate.textContent=`${date}`;
 
         let orderStatus=document.createElement('td');
         orderStatus.classList.add('orderStatus');
         let orderStatusLink=document.createElement('a');
+        orderStatusLink.classList.add('orderStatusBtn');
         orderStatusLink.href=`#`;
         if(!status){
           orderStatusLink.textContent=`未處理`;
+          orderStatusLink.style.color='red';
         }else{
           orderStatusLink.textContent=`已處理`;
+          orderStatusLink.style.color='green';
         }
         orderStatus.appendChild(orderStatusLink);
 
@@ -170,10 +183,9 @@
         delSingleOrderBtn.type='button';
         delSingleOrderBtn.classList.add('delSingleOrder-Btn');
         delSingleOrderBtn.value='刪除';
-        delSingleOrderBtn.dataset.id=`${serial}`;
         orderDelete.appendChild(delSingleOrderBtn);
 
-        orderTableRow.appendChild(orderSerial);
+        orderTableRow.appendChild(orderId);
         orderTableRow.appendChild(orderPerson);
         orderTableRow.appendChild(orderAddress);
         orderTableRow.appendChild(orderEmail);
@@ -184,7 +196,23 @@
         orderTableBody.appendChild(orderTableRow);
       }
 
-
+      //c3 chart
+      const renderChart=()=>{
+        // orders.forEach
+        const chart = c3.generate({
+          bindto: '#chart',
+          color:{
+            pattern: ["#DACBFF", "#9D7FEA", "#5434A7", "#301E5F"]
+          },
+          data: {
+            type:'pie',
+            columns: [
+              ['data1', 30],
+              ['data2', 50]
+            ]
+          }
+        });
+      }
       //監聽
       const discardAllBtn=document.querySelector('.discardAllBtn');
       discardAllBtn.addEventListener('click',e=>{
@@ -193,11 +221,15 @@
       })
 
       orderTableBody.addEventListener('click',e=>{
-        if(e.target.type='button'){
-          let delBtn=e.target;
-          deleteOrder(delBtn.dataset.id);
+        e.preventDefault();
+        let clickTarget=e.target;
+        let tableRow=clickTarget.closest('tr');
+        if(clickTarget.classList.contains('delSingleOrder-Btn')){
+          deleteOrder(tableRow.dataset.id);
         }
-
+        if(clickTarget.classList.contains('orderStatusBtn')){
+          updateOrder(tableRow.dataset.id);
+        }
       })
 
       init();
