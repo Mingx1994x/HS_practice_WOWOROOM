@@ -12,3 +12,5 @@ const adminAuthz = {
         authorization: adminToken
     }
 }
+
+export { customerApi, adminApi, adminAuthz };
