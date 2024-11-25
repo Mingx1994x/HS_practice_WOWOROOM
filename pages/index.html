@@ -396,7 +396,6 @@
       const getProducts=async()=>{
         try {
           const res=await axios.get(`${customerApi}/products`);
-          console.log(res.data);
           productData=res.data.products;
           renderProduct(productData);
 
@@ -409,7 +408,6 @@
       const getCarts=async()=>{
         try {
           const res=await axios.get(`${customerApi}/carts`);
-          console.log(res.data);
           cartData=res.data;
           renderCart(cartData);
         } catch (error) {
@@ -441,7 +439,6 @@
 
         try {
           const res=await axios.post(`${customerApi}/carts`,productInfo);
-          console.log(res);
           cartData=res.data;
           renderCart(cartData);
           toastAlert();
@@ -483,7 +480,6 @@
         let updateData={data};
         try {
           const res=await axios.patch(`${customerApi}/carts`,updateData);
-          console.log(res);
           cartData=res.data;
           renderCart(cartData);
         } catch (error) {
@@ -511,12 +507,8 @@
       const renderProduct=(products)=>{
         productWrap.innerHTML='';
         products.forEach(product => {
-          let productUrl=product.images;
-          let productTitle=product.title;
-          let originPrice=product['origin_price'];
-          let price=product.price;
-          let productId=product.id;
-          createProductCard(productUrl,productTitle,originPrice,price,productId);
+          const {images,title,originPrice,price,id}=product;
+          createProductCard(images,title,originPrice,price,id);
         });
       }
 
@@ -529,13 +521,10 @@
         if(cartsNum!==0){
           let cartProducts=data.carts;
           cartProducts.forEach(cart=>{
-            let cartId=cart.id;
-            let productUrl=cart.product.images;
-            let productPrice=cart.product.price;
-            let productTitle=cart.product.title;
-            let productQty=cart.quantity;
-            let productSum=productPrice*productQty;
-            createCartTable(cartId,productUrl,productPrice,productTitle,productQty,productSum);
+            const {id,quantity}=cart;
+            const {images,price,title}=cart.product;
+            let productSum=price*quantity;
+            createCartTable(id,images,price,title,quantity,productSum);
           });
         }else{
           emptyCart();
@@ -781,7 +770,6 @@
           userInfo.email=document.querySelector('#customerEmail').value.trim();
           userInfo.address=document.querySelector('#customerAddress').value.trim();
           userInfo.payment=document.querySelector('#tradeWay').value;
-          // console.log(userInfo);
           submitOrders(userInfo);
           successDialog();
           deleteAll();
