@@ -377,9 +377,6 @@
       import axios from 'axios';
       import validate from "validate.js";
       import {toastAlert,confirmDialog,successDialog,loadingAlert,messageAlert} from "../assets/js/alert.js";
-      // const HexApi='https://livejs-api.hexschool.io/';
-      // const apiPath='yameow999';
-      // const customerApi=`${HexApi}api/livejs/v1/customer/${apiPath}`;
 
       function init(){
         getProducts();
@@ -419,22 +416,15 @@
       const addCart=async(id)=>{
         const loadingMsg="正在加入購物車...";
         loadingAlert(loadingMsg);
-        let productInfo;
-        let productQty=checkProduct(id);
-        if(productQty>0){
-          productInfo={
-            data:{
-              productId:id,
-              quantity:productQty+1
-            }
-          }
-        }else{
-          productInfo={
+        let productInfo={
             data:{
               productId:id,
               quantity:1
             }
-          }
+          };
+        let productQty=checkProduct(id);
+        if(productQty>0){
+          productInfo.data.quantity+=productQty;
         }
         try {
           const res=await axios.post(`${customerApi}/carts`,productInfo);
