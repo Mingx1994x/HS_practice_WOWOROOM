@@ -536,22 +536,27 @@
         addCardBtn.classList.add('addCardBtn');
         addCardBtn.dataset.id=`${id}`;
         addCardBtn.textContent='加入購物車';
+
+        let productInfo=document.createElement('div')
+        productInfo.classList.add('productInfo','d-flex','flex-column','justify-content-between');
         let productTitle=document.createElement('h3');
         productTitle.textContent=`${title}`;
+        let productPrice=document.createElement('div')
         let originPrice=document.createElement('del');
         originPrice.classList.add('originPrice');
         originPrice.textContent=`NT$${origin}`;
         let nowPrice=document.createElement('p');
         nowPrice.classList.add('nowPrice');
         nowPrice.textContent=`NT$${price}`;
+        productPrice.appendChild(originPrice);
+        productPrice.appendChild(nowPrice);
+        productInfo.appendChild(productTitle);
+        productInfo.appendChild(productPrice);
 
         productCard.appendChild(productType);
         productCard.appendChild(productImg);
         productCard.appendChild(addCardBtn);
-        productCard.appendChild(productTitle);
-        productCard.appendChild(originPrice);
-        productCard.appendChild(nowPrice);
-
+        productCard.appendChild(productInfo);
         productWrap.appendChild(productCard);
       }
 

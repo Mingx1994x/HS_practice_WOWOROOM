@@ -655,7 +655,9 @@ $font-sizes: (
 // scss-docs-end font-sizes
 
 // scss-docs-start headings-variables
-$headings-margin-bottom: $spacer * .5 !default;
+// $headings-margin-bottom: $spacer * .5 !default;
+//custom
+$headings-margin-bottom: 0 !default;
 $headings-font-family: null !default;
 $headings-font-style: null !default;
 $headings-font-weight: 500 !default;
