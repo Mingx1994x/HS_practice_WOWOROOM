@@ -13,7 +13,18 @@
   <body>
     <%- include('./layout/header', {page: "dashBoard"}); -%>
     <section class="wrap">
-      <h2 class="section-title">全品項營收比重</h2>
+      <div
+        class="section-title d-flex justify-content-center align-items-center"
+      >
+        <h2 class="mb-0 me-3" data-chart="products">全品項營收比重</h2>
+        <button
+          type="button"
+          id="chartToggleBtn"
+          class="btn btn-sm btn-primary"
+        >
+          切換
+        </button>
+      </div>
       <div id="chart"></div>
     </section>
     <section class="wrap orderPage-list">
@@ -57,7 +68,6 @@
 
       function init(){
         getOrder();
-        renderChart();
       }
 
       //get order
@@ -68,8 +78,7 @@
           console.log(res.data);
           ordersData=res.data.orders;
           renderTable(ordersData);
-          // renderChart(ordersData);
-
+          renderChart(ordersData,formatProduct);
         } catch (error) {
           console.log(error);
         }
@@ -81,6 +90,7 @@
           const res=await axios.delete(`${adminApi}/orders`,adminAuthz);
           ordersData=res.data.orders;
           renderTable(ordersData);
+          renderChart(ordersData,formatProduct);
         } catch (error) {
           console.log(error.message);
         }
@@ -91,6 +101,7 @@
           const res=await axios.delete(`${adminApi}/orders/${id}`,adminAuthz);
           ordersData=res.data.orders;
           renderTable(ordersData);
+          renderChart(ordersData,formatProduct);
         } catch (error) {
           console.log(error);
         }
@@ -109,7 +120,7 @@
         try {
           const res=await axios.put(`${adminApi}/orders`,updateData,adminAuthz);
           ordersData=res.data.orders;
-          getOrder();
+          renderTable(ordersData);
         } catch (error) {
           console.log(error);
         }
@@ -118,7 +129,52 @@
       //format data
       const formatTime=(timestamp)=>new Date(timestamp*1000).toLocaleDateString();
 
+      const formatProductCategory=(data)=>{
+        let formatData=new Object;
+        data.forEach(order=>{
+          let products=order.products;
+          products.forEach(product=>{
+            const {category,price,quantity}=product;
+            if(!formatData[category]){
+              formatData[category]=price*quantity;
+            }else{
+              formatData[category]+=price*quantity;
+            }
+          })
+        })
+        return Object.entries(formatData)
+      }
+      const formatProduct=(data)=>{
+        let formatData=new Object;
+        data.forEach(order=>{
+          let products=order.products;
+          products.forEach(product=>{
+            const {title,price,quantity}=product;
+            if(!formatData[title]){
+              formatData[title]=price*quantity;
+            }else{
+              formatData[title]+=price*quantity;
+            }
+          })
+        })
+        return sortData(Object.entries(formatData));
 
+      }
+      const sortData=(data)=>{
+        let rankData=new Array;
+        let othersData=0;
+        data.sort((a,b)=>b[1]-a[1]);
+        console.log(data);
+        data.forEach((item,index)=>{
+          if(index<=2){
+            rankData.push(item);
+          }else{
+            othersData+=item[1];
+          }
+        })
+        rankData.push(['其他',othersData]);
+        return rankData;
+      }
 
 
       //渲染
@@ -197,19 +253,16 @@
       }
 
       //c3 chart
-      const renderChart=()=>{
-        // orders.forEach
+      const renderChart=(data,format)=>{
+        let chartData=format(data);
         const chart = c3.generate({
           bindto: '#chart',
           color:{
-            pattern: ["#DACBFF", "#9D7FEA", "#5434A7", "#301E5F"]
+            pattern: ["#DACBFF", "#9D7FEA", "#5434A7", "#301E5F", "#C3A5FF", "#8465D6", "#482B91", "#271A4F"]
           },
           data: {
             type:'pie',
-            columns: [
-              ['data1', 30],
-              ['data2', 50]
-            ]
+            columns: chartData
           }
         });
       }
@@ -229,6 +282,23 @@
         }
         if(clickTarget.classList.contains('orderStatusBtn')){
           updateOrder(tableRow.dataset.id);
+        }
+      })
+
+      const chartToggleBtn=document.querySelector('#chartToggleBtn');
+      const chartTitle=document.querySelector('.section-title h2');
+      chartToggleBtn.addEventListener('click',()=>{
+        let chartType=['products','category'];
+        let title=['全品項營收比重','全產品類別營收比重'];
+        let currentType=chartTitle.dataset.chart;
+        if(currentType===chartType[0]){
+          chartTitle.dataset.chart=chartType[1];
+          chartTitle.textContent=title[1];
+          renderChart(ordersData,formatProductCategory);
+        }else if(currentType===chartType[1]){
+          chartTitle.dataset.chart=chartType[0];
+          chartTitle.textContent=title[0];
+          renderChart(ordersData,formatProduct);
         }
       })
 
