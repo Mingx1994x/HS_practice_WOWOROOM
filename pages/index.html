@@ -399,9 +399,8 @@
           const res=await axios.get(`${customerApi}/products`);
           productData=res.data.products;
           renderProduct(productData);
-
         } catch (error) {
-          console.log(error.message);
+          messageAlert(error.response.data.message||"系統忙線中，\n請稍候再試或洽詢客服人員")
         }
       }
 
@@ -412,7 +411,7 @@
           cartData=res.data;
           renderCart(cartData);
         } catch (error) {
-          console.log(error.message||'something went wrong');
+          messageAlert(error.response.data.message||"系統忙線中，\n請稍候再試或洽詢客服人員")
         }
       }
 
@@ -437,14 +436,13 @@
             }
           }
         }
-
         try {
           const res=await axios.post(`${customerApi}/carts`,productInfo);
           cartData=res.data;
           renderCart(cartData);
           toastAlert();
         } catch (error) {
-          console.log(error);
+          messageAlert(error.response.data.message||"系統忙線中，\n請稍候再試或洽詢客服人員")
         }
       }
 
@@ -455,23 +453,31 @@
       }
       //delete cart
       const deleteAll=async()=>{
+        let status;
         try {
           const res=await axios.delete(`${customerApi}/carts`);
+          status=res.status;
           cartData=res.data;
           renderCart(cartData);
         } catch (error) {
-          console.log(error.message);
+          status=error.status;
+          messageAlert(error.response.data.message||"系統忙線中，\n請稍候再試或洽詢客服人員")
         }
+        return status;
       }
 
       const deleteProduct=async(id)=>{
+        let status;
         try {
           const res=await axios.delete(`${customerApi}/carts/${id}`);
           cartData=res.data;
+          status=res.status;
           renderCart(cartData);
         } catch (error) {
-          console.log(error);
+          status=error.status;
+          messageAlert(error.response.data.message||"系統忙線中，\n請稍候再試或洽詢客服人員")
         }
+        return status;
       }
 
       //update cart
@@ -484,7 +490,7 @@
           cartData=res.data;
           renderCart(cartData);
         } catch (error) {
-          console.log(error);
+          messageAlert(error.response.data.message||"系統忙線中，\n請稍候再試或洽詢客服人員")
         }
       }
 
@@ -497,8 +503,12 @@
         }
         try {
           const res=await axios.post(`${customerApi}/orders`,orderData);
+          messageItems.forEach(item=>item.textContent='');
+          successDialog();
+          orderForm.reset();
+          getCarts();
         } catch (error) {
-          console.log(error);
+          messageAlert(error.response.data.message||"系統忙線中，\n請稍候再試或洽詢客服人員")
         }
       }
 
@@ -764,7 +774,10 @@
         if(cartData.carts.length===0){
           const message="購物車是空的唷！趕緊來選購吧！";
           messageAlert(message);
-        }else if(validateResult){
+          return
+        }
+
+        if(validateResult){
           validForm(validateResult);
         }else{
           let userInfo=new Object;
@@ -774,10 +787,6 @@
           userInfo.address=document.querySelector('#customerAddress').value.trim();
           userInfo.payment=document.querySelector('#tradeWay').value;
           submitOrders(userInfo);
-          messageItems.forEach(item=>item.textContent='');
-          successDialog();
-          deleteAll();
-          orderForm.reset();
         }
       })
 

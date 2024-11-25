@@ -43,11 +43,15 @@ const confirmDialog = (title, fn, text) => {
         cancelButtonText: "取消"
     }).then((result) => {
         if (result.isConfirmed) {
-            fn();
-            Swal.fire({
-                text,
-                icon: "success"
-            });
+            let status = fn();
+            status.then(res => {
+                if (res === 200) {
+                    Swal.fire({
+                        text,
+                        icon: "success"
+                    });
+                }
+            })
         }
     });
 }
