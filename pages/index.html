@@ -372,13 +372,14 @@
       </form>
     </section>
     <script type="module" src="../main.js"></script>
+    <script src="../assets/js/config.js"></script>
     <script type="module">
       import axios from 'axios';
       import validate from "validate.js";
       import {toastAlert,confirmDialog,successDialog,loadingAlert,messageAlert} from "../assets/js/alert.js";
-      const HexApi='https://livejs-api.hexschool.io/';
-      const apiPath='yameow999';
-      const customerApi=`${HexApi}api/livejs/v1/customer/${apiPath}`;
+      // const HexApi='https://livejs-api.hexschool.io/';
+      // const apiPath='yameow999';
+      // const customerApi=`${HexApi}api/livejs/v1/customer/${apiPath}`;
 
       function init(){
         getProducts();
