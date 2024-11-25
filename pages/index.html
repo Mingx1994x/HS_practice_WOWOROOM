@@ -375,7 +375,7 @@
     <script type="module">
       import axios from 'axios';
       import validate from "validate.js";
-      import {toastAlert,confirmDialog,successDialog,loadingAlert} from "../assets/js/alert.js";
+      import {toastAlert,confirmDialog,successDialog,loadingAlert,messageAlert} from "../assets/js/alert.js";
       const HexApi='https://livejs-api.hexschool.io/';
       const apiPath='yameow999';
       const customerApi=`${HexApi}api/livejs/v1/customer/${apiPath}`;
@@ -496,7 +496,6 @@
         }
         try {
           const res=await axios.post(`${customerApi}/orders`,orderData);
-          console.log(res);
         } catch (error) {
           console.log(error);
         }
@@ -721,6 +720,7 @@
 
       //表單驗證
       const orderForm=document.querySelector('.orderInfo-form');
+      let messageItems=document.querySelectorAll('.orderInfo-message');
       let constraints={
         '姓名':{
           presence:{
@@ -760,10 +760,12 @@
         e.preventDefault();
         let validateResult=validate(orderForm,constraints);
         if(cartData.carts.length===0){
-          Swal.fire("購物車是空的唷！趕緊來選購吧！");
+          const message="購物車是空的唷！趕緊來選購吧！";
+          messageAlert(message);
         }else if(validateResult){
           validForm(validateResult);
         }else{
+          // validForm(validateResult);
           let userInfo=new Object;
           userInfo.name=document.querySelector('#customerName').value.trim();
           userInfo.tel=document.querySelector('#customerPhone').value.trim();
@@ -771,6 +773,7 @@
           userInfo.address=document.querySelector('#customerAddress').value.trim();
           userInfo.payment=document.querySelector('#tradeWay').value;
           submitOrders(userInfo);
+          messageItems.forEach(item=>item.textContent='');
           successDialog();
           deleteAll();
           orderForm.reset();
@@ -778,10 +781,8 @@
       })
 
       const validForm=(result)=>{
-          let messageItems=document.querySelectorAll('.orderInfo-message');
           messageItems.forEach(item=>{
             let message=item.dataset.message;
-            console.log(message);
             let validMessage=result[message];
             if(validMessage){
               item.textContent=`${validMessage[0]}`;

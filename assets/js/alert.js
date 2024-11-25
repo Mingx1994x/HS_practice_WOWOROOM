@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 
-export { toastAlert, confirmDialog, successDialog, loadingAlert };
+export { toastAlert, confirmDialog, successDialog, loadingAlert, messageAlert };
 
 const toastAlert = () => {
     const Toast = Swal.mixin({
@@ -60,4 +60,8 @@ const successDialog = () => {
         showConfirmButton: false,
         timer: 1500
     });
+}
+
+const messageAlert = (message) => {
+    Swal.fire(`${message}`);
 }
