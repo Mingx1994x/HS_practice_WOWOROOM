@@ -570,6 +570,7 @@
 
       const createCartTable=(cartId,url,price,title,quantity,sum)=> {
           let cartTableRow=document.createElement('tr');
+          cartTableRow.dataset.id=`${cartId}`;
           let cartItem=document.createElement('td');
           let cartContainer=document.createElement('div');
           cartContainer.classList.add('cardItem-title');
@@ -588,11 +589,10 @@
           cartTableRow.appendChild(cartPrice);
 
           let cartQty=document.createElement('td');
-          cartQty.dataset.id=`${cartId}`;
+          cartQty.dataset.quantity=`${quantity}`;
           let minusBtn=document.createElement('button');
           minusBtn.classList.add('btn','btn-sm','btn-outline-primary','minusBtn');
           minusBtn.type='button';
-          minusBtn.dataset.quantity=`${quantity}`;
           minusBtn.textContent='-';
           let quantityNum=document.createElement('span');
           quantityNum.classList.add('mx-3');
@@ -600,7 +600,6 @@
           let plusBtn=document.createElement('button');
           plusBtn.classList.add('btn','btn-sm','btn-outline-primary','plusBtn');
           plusBtn.type='button';
-          plusBtn.dataset.quantity=`${quantity}`;
           plusBtn.textContent='+';
           cartQty.appendChild(minusBtn);
           cartQty.appendChild(quantityNum);
@@ -613,7 +612,6 @@
 
           let discardBtn=document.createElement('td');
           discardBtn.classList.add('discardBtn');
-          discardBtn.dataset.discard=`${cartId}`;
           let discardIcon=document.createElement('a');
           discardIcon.classList.add('material-symbols-outlined','removeBtn');
           discardIcon.textContent='clear';
@@ -675,32 +673,35 @@
 
       cartBody.addEventListener('click',e=>{
         let clickTarget=e.target;
-        if(clickTarget.getAttribute('class').includes('removeBtn')){
-          let deleteId=clickTarget.parentNode.dataset.discard;
+        let tableRow=clickTarget.closest('tr');
+        let targetId=tableRow.dataset.id;
+        if(clickTarget.classList.contains('removeBtn')){
           const confirmMsg={
             ask:"確定將此商品移除購物車嗎?",
             result:"商品已移除"
           };
-          confirmDialog(confirmMsg.ask,()=>deleteProduct(deleteId),confirmMsg.result);
+          confirmDialog(confirmMsg.ask,()=>deleteProduct(targetId),confirmMsg.result);
         }
 
-        if(clickTarget.getAttribute('class').includes('plusBtn')){
+        if(clickTarget.classList.contains('plusBtn')){
           let updateData=new Object;
-          updateData.id=clickTarget.parentNode.dataset.id;
-          updateData.quantity=Number(clickTarget.dataset.quantity)+1;
+          updateData.id=targetId;
+          let currentQty=clickTarget.parentNode.dataset.quantity;
+          updateData.quantity=Number(currentQty)+1;
           updateCart(updateData);
         }
 
-        if(clickTarget.getAttribute('class').includes('minusBtn')){
+        if(clickTarget.classList.contains('minusBtn')){
           let updateData=new Object;
-          updateData.id=clickTarget.parentNode.dataset.id;
-          updateData.quantity=Number(clickTarget.dataset.quantity)-1;
+          updateData.id=targetId;
+          let currentQty=clickTarget.parentNode.dataset.quantity;
+          updateData.quantity=Number(currentQty)-1;
           if(updateData.quantity===0){
             const confirmMsg={
             ask:"確定將此商品移除購物車嗎?",
             result:"商品已移除"
           };
-          confirmDialog(confirmMsg.ask,()=>deleteProduct(deleteId),confirmMsg.result);
+          confirmDialog(confirmMsg.ask,()=>deleteProduct(targetId),confirmMsg.result);
           }else{
             updateCart(updateData);
           }
@@ -765,7 +766,6 @@
         }else if(validateResult){
           validForm(validateResult);
         }else{
-          // validForm(validateResult);
           let userInfo=new Object;
           userInfo.name=document.querySelector('#customerName').value.trim();
           userInfo.tel=document.querySelector('#customerPhone').value.trim();
