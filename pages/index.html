@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-    />
-    <title>WOWOROOM</title>
-  </head>
-  <body>
-    <%- include('./layout/header', {page: "index"}); -%>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <title>WOWOROOM</title>
+</head>
+
+<body>
+  <%- include('./layout/header', {page: "index" }); -%>
     <section class="wrap" id="bedAdvantage">
       <div class="banner">
         <h2 class="banner-text">窩窩家居<br />跟您一起品味生活</h2>
@@ -19,27 +19,17 @@
       <h3 class="section-title">床墊優勢</h3>
       <ul class="bedAdvantage list-unstyled">
         <li>
-          <img
-            class="bedAdvantage-img"
-            src="https://i.imgur.com/tR426y5.png"
-            alt="原木料環保"
-          />
+          <img class="bedAdvantage-img" src="https://i.imgur.com/tR426y5.png" alt="原木料環保" />
           <p class="bedAdvantage-text">原木料環保</p>
         </li>
         <li>
-          <img
-            class="bedAdvantage-img"
-            src="https://i.imgur.com/Fd2MiBb.png"
-            alt="好收納"
-          />
+          <img class="bedAdvantage-img" src="https://i.imgur.com/Fd2MiBb.png" alt="好收納" />
           <p class="bedAdvantage-text">好收納</p>
         </li>
         <li>
-          <img
-            class="bedAdvantage-img"
+          <img class="bedAdvantage-img"
             src="https://github.com/hexschool/js-training/blob/main/%E7%AC%AC%E4%B9%9D%E9%80%B1%E4%B8%BB%E7%B7%9A%E4%BB%BB%E5%8B%99%E5%9C%96%E5%BA%AB/5n1uTFh.png?raw=true"
-            alt="好組裝"
-          />
+            alt="好組裝" />
           <p class="bedAdvantage-text">好組裝</p>
         </li>
       </ul>
@@ -125,8 +115,7 @@
             <li class="recommendation-card">
               <img
                 src="https://github.com/hexschool/js-training/blob/main/%E7%AC%AC%E4%B9%9D%E9%80%B1%E4%B8%BB%E7%B7%9A%E4%BB%BB%E5%8B%99%E5%9C%96%E5%BA%AB/3IATkJG.png?raw=true"
-                alt=""
-              />
+                alt="" />
               <div class="recommend-content">
                 <div class="recommend-img">
                   <img src="https://i.imgur.com/8WwZsLS.png" alt="" />
@@ -185,8 +174,7 @@
                 <div class="recommend-img">
                   <img
                     src="https://github.com/hexschool/js-training/blob/main/%E7%AC%AC%E4%B9%9D%E9%80%B1%E4%B8%BB%E7%B7%9A%E4%BB%BB%E5%8B%99%E5%9C%96%E5%BA%AB/8O1cOnG.png?raw=true"
-                    alt=""
-                  />
+                    alt="" />
                   <div>
                     <p>江八角</p>
                     <p class="recommend-text">Charles 雙人床架</p>
@@ -227,8 +215,7 @@
                 <div class="recommend-img">
                   <img
                     src="https://github.com/hexschool/js-training/blob/main/%E7%AC%AC%E4%B9%9D%E9%80%B1%E4%B8%BB%E7%B7%9A%E4%BB%BB%E5%8B%99%E5%9C%96%E5%BA%AB/3ako6QX.png?raw=true"
-                    alt=""
-                  />
+                    alt="" />
                   <div>
                     <p>PeiQun</p>
                     <p class="recommend-text">Antony 雙人床架</p>
@@ -309,52 +296,28 @@
         <div class="orderInfo-formGroup">
           <label for="customerName" class="orderInfo-label">姓名</label>
           <div class="orderInfo-inputWrap">
-            <input
-              type="text"
-              class="orderInfo-input"
-              id="customerName"
-              placeholder="請輸入姓名"
-              name="姓名"
-            />
+            <input type="text" class="orderInfo-input" id="customerName" placeholder="請輸入姓名" name="姓名" />
             <p class="orderInfo-message" data-message="姓名"></p>
           </div>
         </div>
         <div class="orderInfo-formGroup">
           <label for="customerPhone" class="orderInfo-label">電話</label>
           <div class="orderInfo-inputWrap">
-            <input
-              type="tel"
-              class="orderInfo-input"
-              id="customerPhone"
-              placeholder="請輸入電話"
-              name="電話"
-            />
+            <input type="tel" class="orderInfo-input" id="customerPhone" placeholder="請輸入電話" name="電話" />
             <p class="orderInfo-message" data-message="電話"></p>
           </div>
         </div>
         <div class="orderInfo-formGroup">
           <label for="customerEmail" class="orderInfo-label">Email</label>
           <div class="orderInfo-inputWrap">
-            <input
-              type="email"
-              class="orderInfo-input"
-              id="customerEmail"
-              placeholder="請輸入 Email"
-              name="Email"
-            />
+            <input type="email" class="orderInfo-input" id="customerEmail" placeholder="請輸入 Email" name="Email" />
             <p class="orderInfo-message" data-message="Email"></p>
           </div>
         </div>
         <div class="orderInfo-formGroup">
           <label for="customerAddress" class="orderInfo-label">寄送地址</label>
           <div class="orderInfo-inputWrap">
-            <input
-              type="text"
-              class="orderInfo-input"
-              id="customerAddress"
-              placeholder="請輸入寄送地址"
-              name="寄送地址"
-            />
+            <input type="text" class="orderInfo-input" id="customerAddress" placeholder="請輸入寄送地址" name="寄送地址" />
             <p class="orderInfo-message" data-message="寄送地址"></p>
           </div>
         </div>
@@ -375,187 +338,187 @@
     <script type="module">
       import axios from 'axios';
       import validate from "validate.js";
-      import {toastAlert,confirmDialog,successDialog,loadingAlert,messageAlert} from "../assets/js/alert.js";
-      import {customerApi} from "../assets/js/config.js";
-      function init(){
+      import { toastAlert, confirmDialog, successDialog, loadingAlert, messageAlert } from "../assets/js/alert.js";
+      import { customerApi } from "../assets/js/config.js";
+      function init() {
         getProducts();
         getCarts();
       }
-      const productSelect=document.querySelector('.productSelect');
-      const productWrap=document.querySelector('.productWrap');
-      const cartTable=document.querySelector('.shoppingCart-table');
-      const cartBody=document.querySelector('.cartBody');
-      const cartFoot=document.querySelector('.cartFoot');
-      let productData=new Array;
-      let cartData=new Object;
+      const productSelect = document.querySelector('.productSelect');
+      const productWrap = document.querySelector('.productWrap');
+      const cartTable = document.querySelector('.shoppingCart-table');
+      const cartBody = document.querySelector('.cartBody');
+      const cartFoot = document.querySelector('.cartFoot');
+      let productData = new Array;
+      let cartData = new Object;
 
       //get product data
-      const getProducts=async()=>{
+      const getProducts = async () => {
         try {
-          const res=await axios.get(`${customerApi}/products`);
-          productData=res.data.products;
+          const res = await axios.get(`${customerApi}/products`);
+          productData = res.data.products;
           renderProduct(productData);
         } catch (error) {
-          messageAlert(error.response.data.message||"系統忙線中，\n請稍候再試或洽詢客服人員")
+          messageAlert(error.response.data.message || "系統忙線中，\n請稍候再試或洽詢客服人員")
         }
       }
 
       //get cart data
-      const getCarts=async()=>{
+      const getCarts = async () => {
         try {
-          const res=await axios.get(`${customerApi}/carts`);
-          cartData=res.data;
+          const res = await axios.get(`${customerApi}/carts`);
+          cartData = res.data;
           renderCart(cartData);
         } catch (error) {
-          messageAlert(error.response.data.message||"系統忙線中，\n請稍候再試或洽詢客服人員")
+          messageAlert(error.response.data.message || "系統忙線中，\n請稍候再試或洽詢客服人員")
         }
       }
 
       //add product data
-      const addCart=async(id)=>{
-        const loadingMsg="正在加入購物車...";
+      const addCart = async (id) => {
+        const loadingMsg = "正在加入購物車...";
         loadingAlert(loadingMsg);
-        let productInfo={
-            data:{
-              productId:id,
-              quantity:1
-            }
-          };
-        let productQty=checkProduct(id);
-        if(productQty>0){
-          productInfo.data.quantity+=productQty;
+        let productInfo = {
+          data: {
+            productId: id,
+            quantity: 1
+          }
+        };
+        let productQty = checkProduct(id);
+        if (productQty > 0) {
+          productInfo.data.quantity += productQty;
         }
         try {
-          const res=await axios.post(`${customerApi}/carts`,productInfo);
-          cartData=res.data;
+          const res = await axios.post(`${customerApi}/carts`, productInfo);
+          cartData = res.data;
           renderCart(cartData);
           toastAlert();
         } catch (error) {
-          messageAlert(error.response.data.message||"系統忙線中，\n請稍候再試或洽詢客服人員")
+          messageAlert(error.response.data.message || "系統忙線中，\n請稍候再試或洽詢客服人員")
         }
       }
 
       //判斷使否有商品
-      const checkProduct=(id)=>{
-        let product=cartData.carts.filter(cart=>cart.product.id===id);
-        return (product.length>0)? (product[0].quantity):0;
+      const checkProduct = (id) => {
+        let product = cartData.carts.filter(cart => cart.product.id === id);
+        return (product.length > 0) ? (product[0].quantity) : 0;
       }
       //delete cart
-      const deleteAll=async()=>{
+      const deleteAll = async () => {
         let status;
         try {
-          const res=await axios.delete(`${customerApi}/carts`);
-          status=res.status;
-          cartData=res.data;
+          const res = await axios.delete(`${customerApi}/carts`);
+          status = res.status;
+          cartData = res.data;
           renderCart(cartData);
         } catch (error) {
-          status=error.status;
-          messageAlert(error.response.data.message||"系統忙線中，\n請稍候再試或洽詢客服人員")
+          status = error.status;
+          messageAlert(error.response.data.message || "系統忙線中，\n請稍候再試或洽詢客服人員")
         }
         return status;
       }
 
-      const deleteProduct=async(id)=>{
+      const deleteProduct = async (id) => {
         let status;
         try {
-          const res=await axios.delete(`${customerApi}/carts/${id}`);
-          cartData=res.data;
-          status=res.status;
+          const res = await axios.delete(`${customerApi}/carts/${id}`);
+          cartData = res.data;
+          status = res.status;
           renderCart(cartData);
         } catch (error) {
-          status=error.status;
-          messageAlert(error.response.data.message||"系統忙線中，\n請稍候再試或洽詢客服人員")
+          status = error.status;
+          messageAlert(error.response.data.message || "系統忙線中，\n請稍候再試或洽詢客服人員")
         }
         return status;
       }
 
       //update cart
-      const updateCart=async(data)=>{
-        const loadingMsg="正在更改訂單數量...";
+      const updateCart = async (data) => {
+        const loadingMsg = "正在更改訂單數量...";
         loadingAlert(loadingMsg);
-        let updateData={data};
+        let updateData = { data };
         try {
-          const res=await axios.patch(`${customerApi}/carts`,updateData);
-          cartData=res.data;
+          const res = await axios.patch(`${customerApi}/carts`, updateData);
+          cartData = res.data;
           renderCart(cartData);
         } catch (error) {
-          messageAlert(error.response.data.message||"系統忙線中，\n請稍候再試或洽詢客服人員")
+          messageAlert(error.response.data.message || "系統忙線中，\n請稍候再試或洽詢客服人員")
         }
       }
 
       //提交訂單
-      const submitOrders=async(userInfo)=>{
-        let orderData={
-          data:{
-            user:userInfo
+      const submitOrders = async (userInfo) => {
+        let orderData = {
+          data: {
+            user: userInfo
           }
         }
         try {
-          const res=await axios.post(`${customerApi}/orders`,orderData);
-          messageItems.forEach(item=>item.textContent='');
+          const res = await axios.post(`${customerApi}/orders`, orderData);
+          messageItems.forEach(item => item.textContent = '');
           successDialog();
           orderForm.reset();
           getCarts();
         } catch (error) {
-          messageAlert(error.response.data.message||"系統忙線中，\n請稍候再試或洽詢客服人員")
+          messageAlert(error.response.data.message || "系統忙線中，\n請稍候再試或洽詢客服人員")
         }
       }
 
 
       // render
-      const renderProduct=(products)=>{
-        productWrap.innerHTML='';
+      const renderProduct = (products) => {
+        productWrap.innerHTML = '';
         products.forEach(product => {
-          const {images,title,originPrice,price,id}=product;
-          createProductCard(images,title,originPrice,price,id);
+          const { images, title, origin_price, price, id } = product;
+          createProductCard(images, title, origin_price, price, id);
         });
       }
 
-      const renderCart=(data)=>{
-        cartBody.innerHTML='';
-        cartFoot.innerHTML='';
-        let cartsNum=data.carts.length;
-        let cartTotal=data.finalTotal;
+      const renderCart = (data) => {
+        cartBody.innerHTML = '';
+        cartFoot.innerHTML = '';
+        let cartsNum = data.carts.length;
+        let cartTotal = data.finalTotal;
         createCartFoot(cartTotal);
-        if(cartsNum!==0){
-          let cartProducts=data.carts;
-          cartProducts.forEach(cart=>{
-            const {id,quantity}=cart;
-            const {images,price,title}=cart.product;
-            let productSum=price*quantity;
-            createCartTable(id,images,price,title,quantity,productSum);
+        if (cartsNum !== 0) {
+          let cartProducts = data.carts;
+          cartProducts.forEach(cart => {
+            const { id, quantity } = cart;
+            const { images, price, title } = cart.product;
+            let productSum = price * quantity;
+            createCartTable(id, images, price, title, quantity, productSum);
           });
-        }else{
+        } else {
           emptyCart();
-          const discardAllBtn=document.querySelector('.discardAllBtn');
+          const discardAllBtn = document.querySelector('.discardAllBtn');
           discardAllBtn.classList.add('disabled');
         }
       }
 
-      const createProductCard=(url,title,origin,price,id)=>{
-        let productCard=document.createElement('li');
+      const createProductCard = (url, title, origin, price, id) => {
+        let productCard = document.createElement('li');
         productCard.classList.add('productCard');;
-        let productType=document.createElement('h4');
+        let productType = document.createElement('h4');
         productType.classList.add('productType');
-        productType.textContent='新品';
-        let productImg=document.createElement('img');
-        productImg.src=`${url}`;
-        let addCardBtn=document.createElement('a');
+        productType.textContent = '新品';
+        let productImg = document.createElement('img');
+        productImg.src = `${url}`;
+        let addCardBtn = document.createElement('a');
         addCardBtn.classList.add('addCardBtn');
-        addCardBtn.dataset.id=`${id}`;
-        addCardBtn.textContent='加入購物車';
+        addCardBtn.dataset.id = `${id}`;
+        addCardBtn.textContent = '加入購物車';
 
-        let productInfo=document.createElement('div')
-        productInfo.classList.add('productInfo','d-flex','flex-column','justify-content-between');
-        let productTitle=document.createElement('h3');
-        productTitle.textContent=`${title}`;
-        let productPrice=document.createElement('div')
-        let originPrice=document.createElement('del');
+        let productInfo = document.createElement('div')
+        productInfo.classList.add('productInfo', 'd-flex', 'flex-column', 'justify-content-between');
+        let productTitle = document.createElement('h3');
+        productTitle.textContent = `${title}`;
+        let productPrice = document.createElement('div')
+        let originPrice = document.createElement('del');
         originPrice.classList.add('originPrice');
-        originPrice.textContent=`NT$${origin}`;
-        let nowPrice=document.createElement('p');
+        originPrice.textContent = `NT$${origin}`;
+        let nowPrice = document.createElement('p');
         nowPrice.classList.add('nowPrice');
-        nowPrice.textContent=`NT$${price}`;
+        nowPrice.textContent = `NT$${price}`;
         productPrice.appendChild(originPrice);
         productPrice.appendChild(nowPrice);
         productInfo.appendChild(productTitle);
@@ -568,229 +531,230 @@
         productWrap.appendChild(productCard);
       }
 
-      const createCartTable=(cartId,url,price,title,quantity,sum)=> {
-          let cartTableRow=document.createElement('tr');
-          cartTableRow.dataset.id=`${cartId}`;
-          let cartItem=document.createElement('td');
-          let cartContainer=document.createElement('div');
-          cartContainer.classList.add('cardItem-title');
-          let cartImg=document.createElement('img');
-          cartImg.src=`${url}`;
-          let cartTitle=document.createElement('p');
-          cartTitle.textContent=`${title}`;
+      const createCartTable = (cartId, url, price, title, quantity, sum) => {
+        let cartTableRow = document.createElement('tr');
+        cartTableRow.dataset.id = `${cartId}`;
+        let cartItem = document.createElement('td');
+        let cartContainer = document.createElement('div');
+        cartContainer.classList.add('cardItem-title');
+        let cartImg = document.createElement('img');
+        cartImg.src = `${url}`;
+        let cartTitle = document.createElement('p');
+        cartTitle.textContent = `${title}`;
 
-          cartContainer.appendChild(cartImg);
-          cartContainer.appendChild(cartTitle);
-          cartItem.appendChild(cartContainer);
-          cartTableRow.appendChild(cartItem);
+        cartContainer.appendChild(cartImg);
+        cartContainer.appendChild(cartTitle);
+        cartItem.appendChild(cartContainer);
+        cartTableRow.appendChild(cartItem);
 
-          let cartPrice=document.createElement('td');
-          cartPrice.textContent=`NT$${price}`;
-          cartTableRow.appendChild(cartPrice);
+        let cartPrice = document.createElement('td');
+        cartPrice.textContent = `NT$${price}`;
+        cartTableRow.appendChild(cartPrice);
 
-          let cartQty=document.createElement('td');
-          cartQty.dataset.quantity=`${quantity}`;
-          let minusBtn=document.createElement('button');
-          minusBtn.classList.add('btn','btn-sm','btn-outline-primary','minusBtn');
-          minusBtn.type='button';
-          minusBtn.textContent='-';
-          let quantityNum=document.createElement('span');
-          quantityNum.classList.add('mx-3');
-          quantityNum.textContent=`${quantity}`;
-          let plusBtn=document.createElement('button');
-          plusBtn.classList.add('btn','btn-sm','btn-outline-primary','plusBtn');
-          plusBtn.type='button';
-          plusBtn.textContent='+';
-          cartQty.appendChild(minusBtn);
-          cartQty.appendChild(quantityNum);
-          cartQty.appendChild(plusBtn);
-          cartTableRow.appendChild(cartQty);
+        let cartQty = document.createElement('td');
+        cartQty.dataset.quantity = `${quantity}`;
+        let minusBtn = document.createElement('button');
+        minusBtn.classList.add('btn', 'btn-sm', 'btn-outline-primary', 'minusBtn');
+        minusBtn.type = 'button';
+        minusBtn.textContent = '-';
+        let quantityNum = document.createElement('span');
+        quantityNum.classList.add('mx-3');
+        quantityNum.textContent = `${quantity}`;
+        let plusBtn = document.createElement('button');
+        plusBtn.classList.add('btn', 'btn-sm', 'btn-outline-primary', 'plusBtn');
+        plusBtn.type = 'button';
+        plusBtn.textContent = '+';
+        cartQty.appendChild(minusBtn);
+        cartQty.appendChild(quantityNum);
+        cartQty.appendChild(plusBtn);
+        cartTableRow.appendChild(cartQty);
 
-          let cartSum=document.createElement('td');
-          cartSum.textContent=`NT$${sum}`;
-          cartTableRow.appendChild(cartSum);
+        let cartSum = document.createElement('td');
+        cartSum.textContent = `NT$${sum}`;
+        cartTableRow.appendChild(cartSum);
 
-          let discardBtn=document.createElement('td');
-          discardBtn.classList.add('discardBtn');
-          let discardIcon=document.createElement('a');
-          discardIcon.classList.add('material-symbols-outlined','removeBtn');
-          discardIcon.textContent='clear';
-          discardBtn.appendChild(discardIcon);
-          cartTableRow.appendChild(discardBtn);
+        let discardBtn = document.createElement('td');
+        discardBtn.classList.add('discardBtn');
+        let discardIcon = document.createElement('a');
+        discardIcon.classList.add('material-symbols-outlined', 'removeBtn');
+        discardIcon.textContent = 'clear';
+        discardBtn.appendChild(discardIcon);
+        cartTableRow.appendChild(discardBtn);
 
-          cartBody.appendChild(cartTableRow);
-        }
+        cartBody.appendChild(cartTableRow);
+      }
 
-      const emptyCart=()=>{
-        let cartTableRow=document.createElement('tr');
-        let emptyState=document.createElement('td');
-        emptyState.colSpan='5';
-        emptyState.textContent='目前購物車是空的唷！\n趕緊選購吧！';
-        emptyState.style.textAlign='center';
+      const emptyCart = () => {
+        let cartTableRow = document.createElement('tr');
+        let emptyState = document.createElement('td');
+        emptyState.colSpan = '5';
+        emptyState.textContent = '目前購物車是空的唷！\n趕緊選購吧！';
+        emptyState.style.textAlign = 'center';
         cartTableRow.appendChild(emptyState);
         cartBody.appendChild(cartTableRow);
       }
 
-      const createCartFoot=(total)=>{
-        let cartTableRow=document.createElement('tr');
-        let cartRemoveAll=document.createElement('td');
-        cartRemoveAll.colSpan='3';
-        let discardAllBtn=document.createElement('a');
+      const createCartFoot = (total) => {
+        let cartTableRow = document.createElement('tr');
+        let cartRemoveAll = document.createElement('td');
+        cartRemoveAll.colSpan = '3';
+        let discardAllBtn = document.createElement('a');
         discardAllBtn.classList.add('discardAllBtn');
-        discardAllBtn.textContent='刪除所有品項';
+        discardAllBtn.textContent = '刪除所有品項';
         cartRemoveAll.appendChild(discardAllBtn);
         cartTableRow.appendChild(cartRemoveAll);
 
-        let sumText=document.createElement('td');
-        let text=document.createElement('p');
-        text.textContent='總金額';
+        let sumText = document.createElement('td');
+        let text = document.createElement('p');
+        text.textContent = '總金額';
         sumText.appendChild(text);
         cartTableRow.appendChild(sumText);
 
-        let cartTotal=document.createElement('td')
-        cartTotal.textContent=`NT$${total}`;
+        let cartTotal = document.createElement('td')
+        cartTotal.textContent = `NT$${total}`;
         cartTableRow.appendChild(cartTotal);
         cartFoot.appendChild(cartTableRow);
       }
 
       // 監聽
-      productSelect.addEventListener('change',e=>{
-        let productCategory=e.target.value;
-        if(productCategory==='全部'){
+      productSelect.addEventListener('change', e => {
+        let productCategory = e.target.value;
+        if (productCategory === '全部') {
           renderProduct(productData);
-        }else{
-          let filterProduct=productData.filter(product=>product.category===productCategory);
+        } else {
+          let filterProduct = productData.filter(product => product.category === productCategory);
           renderProduct(filterProduct);
         }
       })
 
-      productWrap.addEventListener('click',e=>{
-        if(e.target.dataset.id){
-          let productId=e.target.dataset.id;
+      productWrap.addEventListener('click', e => {
+        if (e.target.dataset.id) {
+          let productId = e.target.dataset.id;
           addCart(productId);
         }
       })
 
-      cartBody.addEventListener('click',e=>{
-        let clickTarget=e.target;
-        let tableRow=clickTarget.closest('tr');
-        let targetId=tableRow.dataset.id;
-        if(clickTarget.classList.contains('removeBtn')){
-          const confirmMsg={
-            ask:"確定將此商品移除購物車嗎?",
-            result:"商品已移除"
+      cartBody.addEventListener('click', e => {
+        let clickTarget = e.target;
+        let tableRow = clickTarget.closest('tr');
+        let targetId = tableRow.dataset.id;
+        if (clickTarget.classList.contains('removeBtn')) {
+          const confirmMsg = {
+            ask: "確定將此商品移除購物車嗎?",
+            result: "商品已移除"
           };
-          confirmDialog(confirmMsg.ask,()=>deleteProduct(targetId),confirmMsg.result);
+          confirmDialog(confirmMsg.ask, () => deleteProduct(targetId), confirmMsg.result);
         }
 
-        if(clickTarget.classList.contains('plusBtn')){
-          let updateData=new Object;
-          updateData.id=targetId;
-          let currentQty=clickTarget.parentNode.dataset.quantity;
-          updateData.quantity=Number(currentQty)+1;
+        if (clickTarget.classList.contains('plusBtn')) {
+          let updateData = new Object;
+          updateData.id = targetId;
+          let currentQty = clickTarget.parentNode.dataset.quantity;
+          updateData.quantity = Number(currentQty) + 1;
           updateCart(updateData);
         }
 
-        if(clickTarget.classList.contains('minusBtn')){
-          let updateData=new Object;
-          updateData.id=targetId;
-          let currentQty=clickTarget.parentNode.dataset.quantity;
-          updateData.quantity=Number(currentQty)-1;
-          if(updateData.quantity===0){
-            const confirmMsg={
-            ask:"確定將此商品移除購物車嗎?",
-            result:"商品已移除"
-          };
-          confirmDialog(confirmMsg.ask,()=>deleteProduct(targetId),confirmMsg.result);
-          }else{
+        if (clickTarget.classList.contains('minusBtn')) {
+          let updateData = new Object;
+          updateData.id = targetId;
+          let currentQty = clickTarget.parentNode.dataset.quantity;
+          updateData.quantity = Number(currentQty) - 1;
+          if (updateData.quantity === 0) {
+            const confirmMsg = {
+              ask: "確定將此商品移除購物車嗎?",
+              result: "商品已移除"
+            };
+            confirmDialog(confirmMsg.ask, () => deleteProduct(targetId), confirmMsg.result);
+          } else {
             updateCart(updateData);
           }
         }
       })
 
-      cartFoot.addEventListener('click',e=>{
-        let clickTarget=e.target;
-        if(clickTarget.getAttribute('class')==='discardAllBtn'){
-          const confirmMsg={
-            ask:"確定移除購物車的所有商品嗎?",
-            result:"商品已全數移除"
+      cartFoot.addEventListener('click', e => {
+        let clickTarget = e.target;
+        if (clickTarget.getAttribute('class') === 'discardAllBtn') {
+          const confirmMsg = {
+            ask: "確定移除購物車的所有商品嗎?",
+            result: "商品已全數移除"
           };
-          confirmDialog(confirmMsg.ask,deleteAll,confirmMsg.result);
+          confirmDialog(confirmMsg.ask, deleteAll, confirmMsg.result);
         }
       })
 
       //表單驗證
-      const orderForm=document.querySelector('.orderInfo-form');
-      let messageItems=document.querySelectorAll('.orderInfo-message');
-      let constraints={
-        '姓名':{
-          presence:{
-            message:'^必填!'
+      const orderForm = document.querySelector('.orderInfo-form');
+      let messageItems = document.querySelectorAll('.orderInfo-message');
+      let constraints = {
+        '姓名': {
+          presence: {
+            message: '^必填!'
           }
         },
-        '電話':{
-          presence:{
-            message:'^必填!'
+        '電話': {
+          presence: {
+            message: '^必填!'
           },
           format: {
             pattern: /^[0-9]{10}$/,
             message: '^電話格式不正確，請輸入 10 位數字!'
           }
         },
-        'Email':{
-          presence:{
-            message:'^必填!'
+        'Email': {
+          presence: {
+            message: '^必填!'
           },
           email: {
-            message:'^email格式不正確!'
+            message: '^email格式不正確!'
           }
         },
-        '寄送地址':{
-          presence:{
-            message:'^必填!'
+        '寄送地址': {
+          presence: {
+            message: '^必填!'
           },
         },
-        '交易方式':{
-          presence:{
-            message:'^必填!'
+        '交易方式': {
+          presence: {
+            message: '^必填!'
           },
         }
       }
 
-      orderForm.addEventListener('submit',e=>{
+      orderForm.addEventListener('submit', e => {
         e.preventDefault();
-        let validateResult=validate(orderForm,constraints);
-        if(cartData.carts.length===0){
-          const message="購物車是空的唷！趕緊來選購吧！";
+        let validateResult = validate(orderForm, constraints);
+        if (cartData.carts.length === 0) {
+          const message = "購物車是空的唷！趕緊來選購吧！";
           messageAlert(message);
           return
         }
 
-        if(validateResult){
+        if (validateResult) {
           validForm(validateResult);
-        }else{
-          let userInfo=new Object;
-          userInfo.name=document.querySelector('#customerName').value.trim();
-          userInfo.tel=document.querySelector('#customerPhone').value.trim();
-          userInfo.email=document.querySelector('#customerEmail').value.trim();
-          userInfo.address=document.querySelector('#customerAddress').value.trim();
-          userInfo.payment=document.querySelector('#tradeWay').value;
+        } else {
+          let userInfo = new Object;
+          userInfo.name = document.querySelector('#customerName').value.trim();
+          userInfo.tel = document.querySelector('#customerPhone').value.trim();
+          userInfo.email = document.querySelector('#customerEmail').value.trim();
+          userInfo.address = document.querySelector('#customerAddress').value.trim();
+          userInfo.payment = document.querySelector('#tradeWay').value;
           submitOrders(userInfo);
         }
       })
 
-      const validForm=(result)=>{
-          messageItems.forEach(item=>{
-            let message=item.dataset.message;
-            let validMessage=result[message];
-            if(validMessage){
-              item.textContent=`${validMessage[0]}`;
-            }else{
-              item.textContent='';
-            }
-          })
+      const validForm = (result) => {
+        messageItems.forEach(item => {
+          let message = item.dataset.message;
+          let validMessage = result[message];
+          if (validMessage) {
+            item.textContent = `${validMessage[0]}`;
+          } else {
+            item.textContent = '';
+          }
+        })
       }
       init();
     </script>
-  </body>
+</body>
+
 </html>
